@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AI Video Studio</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <main class="app">
+      <header class="header">
+        <div class="brand-mark" aria-hidden="true">AV</div>
+        <div>
+          <h1>AI Video Studio</h1>
+          <p>Cola de prompts para Flow</p>
+        </div>
+      </header>
+
+      <section class="connection-card" aria-live="polite">
+        <span id="connectionDot" class="connection-dot"></span>
+        <div>
+          <strong id="connectionLabel">Verificando Flow…</strong>
+          <p id="connectionDetail">Comprobando la conexión y el estado de la automatización…</p>
+        </div>
+      </section>
+
+      <section class="diagnostic-section">
+        <div class="section-heading">
+          <h2>Interfaz de Flow</h2>
+        </div>
+        <div class="diagnostic-actions">
+          <button id="diagnoseButton" class="button button-secondary" disabled>Diagnosticar (solo lectura)</button>
+          <button id="prepareButton" class="button button-secondary" disabled>Preparar próximo prompt (sin enviar)</button>
+        </div>
+        <pre id="diagnosticOutput" class="diagnostic-output" aria-live="polite">El diagnóstico no interactúa con Flow ni inicia generaciones.</pre>
+        <p id="preparationOutput" class="preparation-output" role="status">Iniciar procesa las escenas pendientes una por una y se detiene si no puede confirmar un resultado.</p>
+        <div class="diagnostic-actions observation-actions">
+          <button id="observeButton" class="button button-secondary" disabled>Observar cambios (sin generar)</button>
+          <button id="stopObservationButton" class="button" disabled>Detener observación</button>
+        </div>
+        <pre id="observationOutput" class="diagnostic-output" aria-live="polite">La cola inicia la observación automáticamente durante el procesamiento.</pre>
+      </section>
+
+      <section class="progress-section" aria-label="Progreso de la cola">
+        <div class="progress-copy">
+          <span id="progressSummary">0 de 0 completados</span>
+          <span id="progressPercent">0%</span>
+        </div>
+        <progress id="progressBar" value="0" max="0"></progress>
+        <p id="queueMessage" class="queue-message">Importá prompts para comenzar.</p>
+      </section>
+
+      <section class="controls" aria-label="Controles de la cola">
+        <button id="startButton" class="button button-primary">Iniciar</button>
+        <button id="pauseButton" class="button">Pausar</button>
+        <button id="resumeButton" class="button">Continuar</button>
+        <button id="stopButton" class="button button-danger">Detener</button>
+      </section>
+
+      <section class="current-card">
+        <span class="eyebrow">PROMPT ACTUAL</span>
+        <p id="currentPrompt">Sin prompt en proceso.</p>
+        <span id="generationStatus" class="status-pill">Inactiva</span>
+      </section>
+
+      <section class="import-section">
+        <div class="section-heading">
+          <h2>Importar prompts</h2>
+          <span id="totalCount" class="count">0 escenas</span>
+        </div>
+        <label for="promptInput">Un prompt por bloque</label>
+        <textarea id="promptInput" rows="5" placeholder="Escribí o pegá tus prompts…"></textarea>
+        <div class="import-options">
+          <label for="splitMode">Separador</label>
+          <select id="splitMode">
+            <option value="separator">Línea ---PROMPT---</option>
+            <option value="blank-lines">Líneas en blanco</option>
+          </select>
+          <button id="importButton" class="button button-secondary">Importar lista</button>
+        </div>
+      </section>
+
+      <section class="scenes-section">
+        <div class="section-heading">
+          <h2>Escenas</h2>
+          <span id="completedCount" class="count">0 completadas</span>
+        </div>
+        <div id="sceneList" class="scene-list"></div>
+        <label for="editPrompt">Editar escena seleccionada</label>
+        <textarea id="editPrompt" rows="3" placeholder="Seleccioná una escena para editarla…" disabled></textarea>
+        <div class="edit-actions">
+          <button id="saveEditButton" class="button button-secondary" disabled>Guardar cambios</button>
+          <button id="retryButton" class="button" disabled>Reintentar escena</button>
+          <button id="confirmCompletedButton" class="button" disabled>Confirmar completada</button>
+        </div>
+      </section>
+      <p id="notice" class="notice" role="status"></p>
+    </main>
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>
